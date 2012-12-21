@@ -13,6 +13,8 @@ module Rapns
       alias_method :attributes_for_device=, :data=
       alias_method :attributes_for_device, :data
 
+      after_create :lpush_to_redis_list, :if => lambda { |notification| Rapns.config.using_blpop? && notification.id }
+
       def device_token=(token)
         write_attribute(:device_token, token.delete(" <>")) if !token.nil?
       end
@@ -79,6 +81,11 @@ module Rapns
       def to_binary(options = {})
         id_for_pack = options[:for_validation] ? 0 : id
         [1, id_for_pack, expiry, 0, 32, device_token, payload_size, payload].pack("cNNccH*na*")
+      end
+
+      def lpush_to_redis_list
+        key = Rapns.config.blpop_key
+        Rapns.redis.lpush key, self.id
       end
 
     end

@@ -2,6 +2,7 @@ require 'thread'
 require 'socket'
 require 'pathname'
 require 'openssl'
+require 'redis'
 
 require 'net/http/persistent'
 

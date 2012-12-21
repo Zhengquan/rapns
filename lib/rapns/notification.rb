@@ -25,6 +25,7 @@ module Rapns
       where(:app_id => apps.map(&:id))
     }
 
+
     def initialize(*args)
       attributes = args.first
       if attributes.is_a?(Hash) && attributes.keys.include?(:attributes_for_device)

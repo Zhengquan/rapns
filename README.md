@@ -82,6 +82,7 @@ n.app = Rapns::Gcm::App.find_by_name("android_app")
 n.registration_ids = ["..."]
 n.data = {:message => "hi mom!"}
 n.save!
+
 ```
 
 ## Starting Rapns
@@ -94,6 +95,18 @@ See [Configuration](rapns/wiki/Configuration) for a list of options, or run `rap
 ## Updating Rapns
 
 After updating you should run `rails g rapns` to check for any new migrations.
+
+## Consider using blpop
+
+Rapns daemon will not need to poll and query undelivered notifications frequently, 
+the notification will be enqueued immediately after being created successfully.   
+to enable blpop:
+
+    Rapns.configure do |config|
+      config.blpop = true
+      config.redis_backend = 'redis://127.0.0.1:6379/1'
+    end
+
 
 ## Wiki
 

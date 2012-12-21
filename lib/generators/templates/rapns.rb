@@ -1,6 +1,6 @@
- # Rapns configuration. Options set here are overridden by command-line options.
+# Rapns configuration. Options set here are overridden by command-line options.
 
- Rapns.configure do |config|
+Rapns.configure do |config|
 
   # Run in the foreground?
   # config.foreground = false
@@ -36,4 +36,14 @@
   #   end
   # end
 
- end
+
+  # using redis blpop to fetch notification ids into delivery quueue.
+  # set the redis_backend value when enable blpop.
+  # config.blpop = true
+  #
+  # config.redis_backend = 'redis://127.0.0.1:6379/11'
+  #
+  # custom the list name using by rapns-daemon
+  # config.blpop_key = 'rapns_blpop_list_ids'
+
+end
